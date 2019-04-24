@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id 'war'
+    //id "io.swagger.core.v3.swagger-gradle-plugin" version "2.0.7"
+    id 'org.gretty' version '2.3.1'
+
+}
+
+
+group 'com.neotys.ntm'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    mavenLocal()
+}
+gretty {
+    scanInterval = 1 //Scan for changes every second
+    host = '0.0.0.0' //Enable network access from outside your local machine
+    servletContainer = 'jetty9.4' //Use Jetty7 which is compatible with JDK6
+    managedClassReload = true //Activate spring-loaded class reloading
+    integrationTestTask = 'integrationTest'
+}
+
+
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    /*Immutables */
+    annotationProcessor "org.immutables:value:2.7.4" // for annotation processor
+    compileOnly "org.immutables:value-annotations:2.7.4" // for annotations
+    compileOnly "org.immutables:builder:2.7.4" // for annotations
+    compileOnly "org.immutables:gson:2.7.4" // for annotations
+    
+    
+    /*Jersey*/
+    compile (group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:'2.26') {
+        exclude group: 'org.glassfish.hk2.external', module: 'javax.inject'
+    }
+    compile (group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version:'2.26') {
+        exclude group: 'org.glassfish.hk2.external', module: 'javax.inject'
+    }
+    
+    
+    // Swagger
+    compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2', version:'2.0.7'
+    //compile group: 'javax.activation', name: 'javax.activation-api', version:'1.2.0'
+
+
+    //compile group: 'javax.activation', name: 'javax.activation-api', version:'1.2.0'
+
+    /*compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2', version:'2.0.7'
+    compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2-servlet-initializer', version:'2.0.7'
+    compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:'2.9.1'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.1'
+    compile group: 'ch.qos.logback', name: 'logback-core', version:'1.0.1'
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:'2.26'
+    //compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version:'2.26'
+    compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version:'2.26'
+    compile group: 'javax.activation', name: 'javax.activation-api', version:'1.2.0'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version:'2.3.0'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-core', version:'2.3.0'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-jxc', version:'2.3.0'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-xjc', version:'2.3.0'*/
+    //compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0'
+
+
+   // compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0'
+
+
+    /*Data converter*/
+    compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:'2.9.1'
+
+
+
+}
