@@ -38,12 +38,12 @@ dependencies {
         exclude group: 'org.glassfish.hk2.external', module: 'javax.inject'
     }
 
-    /*
+    
     // Swagger
     compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2', version:'2.0.7'
     compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2-servlet-initializer', version:'2.0.7'
 
-    
+    /*
      // Data converter
      compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:'2.9.1'
 
