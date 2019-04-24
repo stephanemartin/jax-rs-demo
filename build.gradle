@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.gretty' version '2.3.1'
+
+}
+
+
+group 'com.neotys.ntm'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    mavenLocal()
+}
+gretty {
+    scanInterval = 1 //Scan for changes every second
+    host = '0.0.0.0' //Enable network access from outside your local machine
+    servletContainer = 'jetty9.4' //Use Jetty7 which is compatible with JDK6
+    managedClassReload = true //Activate spring-loaded class reloading
+    integrationTestTask = 'integrationTest'
+    contextPath = '/'
+}
+
+
+
+
+dependencies {
+
+    // Jersey
+    compile (group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:'2.28') {
+        exclude group: 'org.glassfish.hk2.external', module: 'javax.inject'
+    }
+    compile (group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version:'2.28') {
+        exclude group: 'org.glassfish.hk2.external', module: 'javax.inject'
+    }
+
+    /*
+    // Swagger
+    compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2', version:'2.0.7'
+    compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2-servlet-initializer', version:'2.0.7'
+
+    
+     // Data converter
+     compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:'2.9.1'
+
+     // Immutables
+     annotationProcessor "org.immutables:value:2.7.4" // for annotation processor
+     compileOnly "org.immutables:value-annotations:2.7.4" // for annotations
+     compileOnly "org.immutables:builder:2.7.4" // for annotations
+     compileOnly "org.immutables:gson:2.7.4" // for annotations
+     */
+
+    //test
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+}
