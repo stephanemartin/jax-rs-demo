@@ -1,7 +1,9 @@
 package com.neotys.ntm.jaxrs;
 
 import com.neotys.ntm.jaxrs.data.Book;
+import com.neotys.ntm.jaxrs.data.IdOfDoc;
 import com.neotys.ntm.jaxrs.data.ImmutableBook;
+import com.neotys.ntm.jaxrs.data.ImmutableIdOfDoc;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,6 +11,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
@@ -87,7 +90,6 @@ public class Shelf {
 			responses = {
 					@ApiResponse(responseCode = "200", description = "Book is deleted"),
 					@ApiResponse(responseCode = "404", description = "Book not found")
-
 			}
 	)
 	public Response removeBook(@PathParam("id") final int id) {
@@ -100,7 +102,7 @@ public class Shelf {
 
 	@PUT
 	@Path("{id}")
-	@Operation(description = "Delete book with id",
+	@Operation(description = "Update book with id",
 			responses = {
 					@ApiResponse(responseCode = "200", description = "Book is Updated"),
 					@ApiResponse(responseCode = "404", description = "Book not found")
@@ -116,11 +118,25 @@ public class Shelf {
 	}
 
 	@POST
-	public String addBook(final Book book) {
+	@Operation(description = "Add book",
+			responses = {
+					@ApiResponse(responseCode = "200",content = @Content(schema = @Schema(implementation = IdOfDoc.class))),
+
+					@ApiResponse(responseCode = "404", description = "Book not found")
+
+			}
+	)
+
+	public IdOfDoc addBook(final Book book) {
 		books.add(book);
-		JSONObject obj = new JSONObject();
+		return ImmutableIdOfDoc.builder()
+				.book(book)
+				.id(books.size() - 1)
+				.build();
+		//return String.valueOf(books.size() - 1);
+		/*JSONObject obj = new JSONObject();
 		obj.put("id", books.size() - 1);
-		return obj.toString();
+		return obj.toString();*/
 	}
 
 }
